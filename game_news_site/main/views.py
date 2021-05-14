@@ -9,9 +9,12 @@ from dtf import dtf
 from igrm import igrm
 from vg import vg
 from main.models import Post
+from fresh import fresh
 
 def index(request):
-    context = {}
+    fresh.filler()
+    posts = Post.objects.filter()
+    context = {"posts":posts}
     return render (request, "main/index.html", context)
 
 def dtf_(request):
