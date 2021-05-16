@@ -136,7 +136,7 @@ def vg_date():
         item = "-".join(arr)
         arr1.append(item)
     return arr1
-
+    
 def vg_old_date():
     date_time = vg_date_time()
     date = []
@@ -158,4 +158,3 @@ def vg_old_date():
         sm1 = ".".join(sm1)
         date.append(sm1)
     return date
-   

@@ -1,44 +1,7 @@
-<html>
-<head>
-    <style>
-        body
-        {
-            font-family: 'Courier New', Courier, monospace;
+{% extends "main/base.html" %}
 
-        }
-        .content
-        { 
-            margin-left: 20%;
-            margin-right: 20%;
-            margin-top: 2%;
-            margin-bottom: 2%;
-        }
-        .post_title
-        {
-            text-align: left;
-            font-weight: bold;
-        }
-        .date_time
-        {
-            font-weight: bold;
-            
-        }
-        a
-        {
-            color: black;
-            text-decoration: none;
+{% block content %}
 
-        }
-        .menu
-        {
-            font-weight: bold;
-            font-size: medium;       
-        }
-        
-
-    </style>
-</head>
-<body>
 
 <div class = "content">
     <div class = "menu">
@@ -63,5 +26,5 @@
         <hr/>
     {% endfor%}
 </div>
-</body>
-</html>
+
+{% endblock %}

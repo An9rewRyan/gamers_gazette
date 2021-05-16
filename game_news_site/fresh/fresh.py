@@ -5,6 +5,12 @@ from vg import vg
 from sort import sorting
 import datetime
 import operator
+
+#from igrm import *
+#from dtf import *
+#from vg import *
+#from sorting import *
+
 from main.models import Post
 
 def fresher():
@@ -16,12 +22,24 @@ def fresher():
     vg_t = vg.vg_time()  
     igrm_t = igrm.igrm_time() 
 
-    dtf_d = dtf.dtf_date()   
-    vg_d = vg.vg_date()  
-    igrm_d = igrm.igrm_date() 
+    #dtf_t = dtf_time()  
+    #vg_t = vg_time() 
+    #igrm_t = igrm_time() 
+    #dtf_d = dtf_old_date() 
+    #vg_d = vg_old_date()  
+    #igrm_d = igrm_old_date() 
 
-    t_list1 = []
-    t_list2 = []
+    dtf_d = dtf.dtf_old_date()   
+    vg_d = vg.vg_old_date()  
+    igrm_d = igrm.igrm_old_date() 
+
+    checker = True
+
+    t1 = []
+    t2 = []
+    t3 = []
+    t4 = []
+
     tarray = vg_t + igrm_t + dtf_t   
     darray = vg_d + igrm_d + dtf_d
 
@@ -32,8 +50,8 @@ def fresher():
 
     sorted_tuples = sorted(dt.items(), key=operator.itemgetter(1))
     s_dt = {k: v for k, v in sorted_tuples}
+    
     cnt = 1
-
 
     for key in s_dt:
         if dt[key] == date:
@@ -43,18 +61,43 @@ def fresher():
         else:
             cnt = cnt + 1
 
-    for item in d1:
-        t_list1.append(item)
+    vals = d2
+    vals = list(vals.values())
+    val = vals[0]
+    cnt = 1
 
-    for item in d2:
-        t_list2.append(item)
+    for key in d2:
+        if d2[key] != val:
+            d3 = dict(list(d2.items())[cnt:])
+            d4 = dict(list(d2.items())[:cnt-1])
+            checker = False
+            break
+        else:
+           cnt = cnt + 1
+           print(cnt)
 
-    t_list1 = sorting.quicksort(t_list1)
-    t_list2 = sorting.quicksort(t_list2)
+    for key in d1:
+        t1.append(key)
+
+    for key in d2:
+        t2.append(key)
+
+    for key in d3:
+        t3.append(key)
+
+    for key in d4:
+        t4.append(key)
+
     
-    arr = t_list2 + t_list1
+    #sorting.
+    t1 = sorting.quicksort(t1)
+    t2 = sorting.quicksort(t2)
+    t3 = sorting.quicksort(t3)
+    t4 = sorting.quicksort(t4)
 
-    return arr
+    t_list = t4 + t3 + t1
+
+    return t_list
 
 def filler():
 
@@ -82,8 +125,10 @@ def filler():
     j = 0
     k = 0 
     o = 0
+
     Post.objects.all().delete()
-    while i < 29:
+
+    while i < 27:
 
         if arr[i] == d_time[j]:
             site = "dtf"

@@ -145,7 +145,6 @@ def dtf_date():
         item = "-".join(arr)
         arr1.append(item)
     return arr1
-
 def dtf_old_date():
     date_time = dtf_date_time()
     date = []
@@ -155,7 +154,6 @@ def dtf_old_date():
         item = item.split("|")
         date.append(item[0])
     return date
- 
 def dtf_name2():
     link_arr = dtf_links()
     arr = []
