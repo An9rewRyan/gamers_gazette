@@ -13,7 +13,7 @@ from fresh import fresh
 
 def index(request):
     fresh.filler()
-    posts = Post.objects.filter()
+    posts = Post.objects.filter().order_by("-pub_date")
     context = {"posts":posts}
     return render (request, "main/index.html", context)
 

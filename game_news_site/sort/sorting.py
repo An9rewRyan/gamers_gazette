@@ -12,7 +12,7 @@ def quicksort(array):
         less = [i for i in array if i < pivot]
         greater=  [ i for i in array if i > pivot]
 
-        return   quicksort(greater) + [pivot] +quicksort(less)
+        return   quicksort(less) + [pivot] +quicksort(greater)
 
 
 

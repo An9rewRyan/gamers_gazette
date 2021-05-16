@@ -7,3 +7,4 @@ class Post(models.Model):
     date = models.DateField()
     time = models.TimeField()
     text = models.TextField()
+    pub_date = models.DateTimeField()

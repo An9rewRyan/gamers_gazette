@@ -108,31 +108,54 @@ def filler():
     v_content = vg.vg_content()
     v_time = vg.vg_time()  
     v_date = vg.vg_date()  
+    v_dt = []
 
     d_name = dtf.dtf_names()
     d_link = dtf.dtf_links()
     d_content = dtf.dtf_content()
     d_time = dtf.dtf_time()   
     d_date = dtf.dtf_date() 
+    d_dt = []
 
     i_name = igrm.igrm_names()
     i_link = igrm.igrm_links()
     i_content = igrm.igrm_content()
     i_date = igrm.igrm_date() 
     i_time = igrm.igrm_time() 
+    i_dt = []
 
     i = 0
     j = 0
     k = 0 
     o = 0
 
+    for item in d_date:
+        d_dt.append(str(item)+" "+d_time[i])
+        i = i + 1
+
+    i = 0
+
+    for item in v_date:
+        i_dt.append(str(item)+" "+i_time[i])
+        i = i + 1
+    
+    i = 0
+
+    for item in i_date:
+        v_dt.append(str(item)+" "+v_time[i])
+        i = i + 1
+
+    i = 0
+
+
+
     Post.objects.all().delete()
 
-    while i < 27:
+    while i < 28:
 
         if arr[i] == d_time[j]:
             site = "dtf"
-            p = Post(site = site, title = d_name[j],time = d_time[j], date = d_date[j], text =  d_content[j])
+            p = Post(site = site, title = d_name[j], pub_date = d_dt[j], time = d_time[j], date = d_date[j], text =  d_content[j])
             p.save()    
             i = i + 1
             j = 0
@@ -143,7 +166,7 @@ def filler():
 
         if arr[i] == i_time[k]:
             site = "igromania"
-            p = Post(site = site, title = i_name[k],time = i_time[k], date = i_date[k], text =  i_content[k])
+            p = Post(site = site, title = i_name[k], pub_date = i_dt[k],time = i_time[k], date = i_date[k], text =  i_content[k])
             p.save()
             i= i + 1
             k = 0
@@ -155,7 +178,7 @@ def filler():
 
         if arr[i] == v_time[o]:
             site = "vgtimes"
-            p = Post(site = site, title = v_name[o],time = v_time[o], date = v_date[o], text =  v_content[o])
+            p = Post(site = site, title = v_name[o], pub_date = v_dt[o],time = v_time[o], date = v_date[o], text =  v_content[o])
             p.save()
             i = i + 1
             o = 0
