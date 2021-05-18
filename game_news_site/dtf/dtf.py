@@ -1,6 +1,8 @@
 #DTF
 import bs4, requests
 import re
+import os
+from main.models import Post
 
 def dtf_names():
     i = 0
@@ -30,6 +32,10 @@ def dtf_names():
 
     return name_arr
 
+
+
+
+        
 def dtf_links():
     i = 0
     name_arr = []
@@ -165,5 +171,58 @@ def dtf_name2():
         res = requests.get(url)
         soup = bs4.BeautifulSoup(res.text, 'html.parser')
         out = soup.find_all(class_="content content--full")
+
+def dtf_img():
+
+    Post.objects.all().delete()
+
+    names = dtf_names()
+    links = dtf_links()
+    conts = dtf_content()
+    dts = []
+    date = dtf_date()
+    time = dtf_time()
+    site = "dtf"
+    #"https://leonardo.osnova.io/91e47474-c70d-55ad-af16-b3bc2335e282/"
+    chck = re.compile(r'\"https\:\/\/.*\/\"')
+    url = 'https://dtf.ru/gameindustry/entries/new'
+    img_urls= []
+    res = requests.get(url)
+    soup = bs4.BeautifulSoup(res.text, "html.parser")
+    out = soup.find_all('div',class_='content-image')
+    urls = []
+
+    for item in out:
+
+        mo = chck.search(str(item))
+        img_urls.append(mo.group()[1:-1])
+
+    del img_urls[10:]
+
+    i = 0
+
+    for item in date:
+        dts.append(str(item)+" "+time[i])
+        i = i + 1
+    
+    i = 1
+
+    for item in img_urls:
+        res = requests.get(item)
+        img_file = open(os.path.join('D:\\agregator\\gamers_gazette\\game_news_site\\media\\images','dtf{}.png'.format(i)), 'wb')
+        urls.append('images/dtf{}.png'.format(i))
+        i = i + 1
+
+        for chunk in res.iter_content(100000):
+            img_file.write(chunk)
+        img_file.close()
+
+    i = 1
+    
+    for i in range (0, 10):
+        p = Post(site = site, title = names[i], img = urls[i], pub_date = dts[i], time = time[i], date = date[i], text =  conts[i])
+        p.save() 
+
+
 
 

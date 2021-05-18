@@ -29,7 +29,35 @@ def dtf_names():
     del name_arr[10:]
 
     return name_arr
+    
+def dtf_img():
+    #"https://leonardo.osnova.io/91e47474-c70d-55ad-af16-b3bc2335e282/"
+    chck = re.compile(r'\"https\:\/\/.*\/\"')
+    url = 'https://dtf.ru/gameindustry/entries/new'
+    img_urls= []
+    res = requests.get(url)
+    soup = bs4.BeautifulSoup(res.text, "html.parser")
+    out = soup.find_all('div',class_='content-image')
+    arr = []
 
+    for item in out:
+
+        mo = chck.search(str(item))
+        img_urls.append(mo.group()[1:-1])
+
+    del img_urls[10:]
+    i = 1
+    for item in img_urls:
+        res = requests.get(item)
+
+        #img_file = open(os.path.join(os.path.dirname(os.path.dirname(__file__)),'medias/',os.path.basename(item)), 'wb')
+        #img_file = open(os.path.join("D:\\agregator\\gamers_gazette\\game_news_agregator(console app)\\агрегатор\\medias\\",os.path.basename(item)),'wb')
+        img_file = open(os.path.join('medias','dtf{}.png'.format(i)), 'wb')
+        i = i + 1
+        for chunk in res.iter_content(100000):
+            img_file.write(chunk)
+        img_file.close()
+        
 def dtf_links():
     i = 0
     name_arr = []

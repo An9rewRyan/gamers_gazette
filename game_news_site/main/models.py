@@ -8,3 +8,5 @@ class Post(models.Model):
     time = models.TimeField()
     text = models.TextField()
     pub_date = models.DateTimeField()
+    img = models.ImageField(upload_to='images/', blank=True)
+    post_id = models.IntegerField(primary_key=True)

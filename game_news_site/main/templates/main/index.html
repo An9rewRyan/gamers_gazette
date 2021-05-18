@@ -15,8 +15,11 @@
         {{post.title}}
         </h2>
         <br>
+        <img class = "index_image"src ="{{ MEDIA_URL }}{{post.img.url}}">
+        <br>
         <div class = "date_time">
         {{post.date}} | {{post.time}}
+
         </div>
         <br>
         {{post.text}}

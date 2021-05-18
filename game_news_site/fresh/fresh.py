@@ -1,8 +1,12 @@
+from fresh.sorting import quicksort
+
 import bs4, requests
+
 from igrm import igrm
 from dtf import dtf
 from vg import vg
 from sort import sorting
+
 import datetime
 import operator
 
@@ -18,6 +22,7 @@ def fresher():
     now = datetime.datetime.now()
     time = now.strftime("%H:%M")
     date = now.strftime("%d.%m.%Y")
+
     dtf_t = dtf.dtf_time()   
     vg_t = vg.vg_time()  
     igrm_t = igrm.igrm_time() 
@@ -34,6 +39,9 @@ def fresher():
     igrm_d = igrm.igrm_old_date() 
 
     checker = True
+
+    d3 = []
+    d4 = []
 
     t1 = []
     t2 = []
@@ -61,43 +69,65 @@ def fresher():
         else:
             cnt = cnt + 1
 
-    vals = d2
-    vals = list(vals.values())
-    val = vals[0]
-    cnt = 1
+    if d2 == []:
+       
+        for key in d1:
+            t1.append(key)
+        
+        return sorting.quicksort(t1)
 
-    for key in d2:
-        if d2[key] != val:
-            d3 = dict(list(d2.items())[cnt:])
-            d4 = dict(list(d2.items())[:cnt-1])
-            checker = False
-            break
-        else:
-           cnt = cnt + 1
-           print(cnt)
+    if len(d2) == 1:
 
-    for key in d1:
-        t1.append(key)
+        for key in d1:
+            t1.append(key)
+            
+        for key in d2:
+            t2.append(key)
+        
+        return d2 + sorting.quicksort(t1)
 
-    for key in d2:
-        t2.append(key)
+    if len(d2) > 1:
+        
+        vals = d2
+        vals = list(vals.values())
+        val = vals[0]
+        cnt = 1
+        
+        while cnt < len(d2):
+            
+            for key in d2:
+                
+                if d2[key] != val:
+                    
+                    d3 = dict(list(d2.items())[cnt:])
+                    d4 = dict(list(d2.items())[:cnt-1])
+                    break
+                
+                else:
+                    cnt = cnt + 1
 
-    for key in d3:
-        t3.append(key)
+    if d3 == [] or d4 == []:
 
-    for key in d4:
-        t4.append(key)
+        for key in d1:
+            t1.append(key)
+            
+        for key in d2:
+            t2.append(key)
 
-    
-    #sorting.
-    t1 = sorting.quicksort(t1)
-    t2 = sorting.quicksort(t2)
-    t3 = sorting.quicksort(t3)
-    t4 = sorting.quicksort(t4)
+        return sorting.quicksort(t2) + sorting.quicksort(t1)
 
-    t_list = t4 + t3 + t1
+    if d3 != [] and d4 != []:
 
-    return t_list
+        for key in d1:
+            t1.append(key)
+
+        for key in d3:
+            t3.append(key)
+
+        for key in d4:
+            t4.append(key)
+
+        return sorting.quicksort(t4) +  sorting.quicksort(t3) + sorting.quicksort(t1)
 
 def filler():
 
@@ -116,6 +146,10 @@ def filler():
     d_time = dtf.dtf_time()   
     d_date = dtf.dtf_date() 
     d_dt = []
+    d_img_links = []
+    
+    #for i in range(1,11):
+       # d_img_links.append("images/dtf{}.png".format(i))
 
     i_name = igrm.igrm_names()
     i_link = igrm.igrm_links()
