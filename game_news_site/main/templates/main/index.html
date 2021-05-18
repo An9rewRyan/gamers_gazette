@@ -1,6 +1,8 @@
 {% extends "main/base.html" %}
-
+{% load static %}
 {% block content %}
+
+
 <div class = "content">
     <div class = "menu">
         <a href = "main/">Главная</a>
@@ -8,23 +10,23 @@
         <a href = "http://127.0.0.1:8000/main/vg">VG Times</a>
         <a href = "http://127.0.0.1:8000/main/igrm">Igromania</a>
     </div>
-    <hr/>
     {% for post in posts %}
+    <div class = "post">
         <br>
         <h2 class = "post_title">
         {{post.title}}
         </h2>
         <br>
-        <img class = "index_image"src ="{{ MEDIA_URL }}{{post.img.url}}">
-        <br>
         <div class = "date_time">
         {{post.date}} | {{post.time}}
-
         </div>
         <br>
-        {{post.text}}
+        <div class = "img_container">
+        <a href = "http://127.0.0.1:8000/main/{{post.post_id}}"><img class = "index_image" src ="{{ MEDIA_URL }}{{post.img.url}}"></a>
+        </div>
         <br>
-        <hr/>
+    </div>
     {% endfor%}
 </div>
+
 {% endblock %}

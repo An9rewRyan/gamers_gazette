@@ -11,14 +11,23 @@ body
         margin-right: 31%;
         margin-bottom: 28px;
     }
+.details_content
+{
+    margin-left: 23%;
+    margin-right: 23%;
+
+}
 .post_title
     {
+        margin-top: 15px;
+        margin-left: 10px;
         font-size: 22px;
         text-align: left;
         font-weight: bold;
     }
 .date_time
     {
+        margin-left: 10px;
         font-weight: bold;     
     }
 a
@@ -28,20 +37,24 @@ a
     }
 .menu
     {
-        font-weight: bold;
-        font-size: medium;       
+        font-size: 30px;
+        background-color:rgb(233, 230, 213);
+        font-weight: bold;    
+        text-align: center;  
     }
-.image_container
+.img_container
     {   
+        text-align: center;
 
 
     }
 
-    
 .index_image
     {
+        margin-bottom: 15px;
         width: 766px;
         height: auto;
+
     }
 .post
 {

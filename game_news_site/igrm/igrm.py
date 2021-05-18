@@ -132,8 +132,7 @@ def igrm_old_date():
         date.append(item[0])
     return date
 
-def igrm_img():
-    Post.objects.all().delete()
+def igrm_main():
     site = "igromania"
     names = igrm_names()
     conts = igrm_content()

@@ -172,9 +172,7 @@ def dtf_name2():
         soup = bs4.BeautifulSoup(res.text, 'html.parser')
         out = soup.find_all(class_="content content--full")
 
-def dtf_img():
-
-    Post.objects.all().delete()
+def dtf_main():
 
     names = dtf_names()
     links = dtf_links()

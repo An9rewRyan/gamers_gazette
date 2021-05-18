@@ -164,8 +164,7 @@ def vg_old_date():
 
 
     #src="/uploads/posts/2021-05/v-steam-vyshla-novaya-pesochnica-s-otkrytym-mirom-v-kotoroy-obeschayut-prodvinutyy-kraft-77278-m.jpg?1621339308"
-def vg_img():
-    Post.objects.all().delete()
+def vg_main():
 
     names = vg_names()
     conts = vg_content()

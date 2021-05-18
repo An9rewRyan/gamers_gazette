@@ -3,15 +3,16 @@
 {% block content %}
 
 
-<div class = "content">
+<div class = "details_content">
     <div class = "menu">
         <a href = "main/">Главная</a>
-        <a href = "http://127.0.0.1:8000/main/dtf">DTF</a>
-        <a href = "http://127.0.0.1:8000/main/vg">VG Times</a>
-        <a href = "http://127.0.0.1:8000/main/igrm">Igromania</a>
+        <a href = "http://127.0.0.1:8000/main/dtf">DTF  </a>
+        <a href = "http://127.0.0.1:8000/main/vg">VGTimes  </a>
+        <a href = "http://127.0.0.1:8000/main/igrm">Igromania  </a>
     </div>
-    {% for post in posts %}
+    <br>
     <div class = "post">
+
         <h2 class = "post_title">
         {{post.title}}
         </h2>
@@ -21,10 +22,12 @@
         </div>
         <br>
         <div class = "img_container">
-        <a href = "http://127.0.0.1:8000/main/{{post.post_id}}"><img class = "index_image" src ="{{ MEDIA_URL }}{{post.img.url}}"></a>
+        <img class = "index_image" src ="{{ MEDIA_URL }}{{post.img.url}}">
         </div>
+        <br>
+        {{post.text}}
+        <br>
     </div>
-    {% endfor%}
 </div>
 
 {% endblock %}

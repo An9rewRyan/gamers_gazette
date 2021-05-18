@@ -12,7 +12,12 @@ from main.models import Post
 from fresh import fresh
 
 def index(request):
-    fresh.filler()
+
+    Post.objects.all().delete()
+    dtf.dtf_main()
+    igrm.igrm_main()
+    vg.vg_main()
+
     posts = Post.objects.filter().order_by("-pub_date")
     context = {"posts":posts}
     return render (request, "main/index.html", context)
@@ -20,19 +25,8 @@ def index(request):
 def dtf_(request):
 
     site = "dtf"
-    #names = dtf.dtf_names()
-    #links = dtf.dtf_links()
-    #conts = dtf.dtf_content()
-    #dts = dtf.dtf_date_time()
-    #date = dtf.dtf_date()
-    #time = dtf.dtf_time()
 
-    #Post.objects.all().delete()
-    #for i in range(0,10):
-        #p = Post(site = site, title = names[i], date = date[i], time = time[i], text = conts[i])
-        #p.save()
-    dtf.dtf_img()
-    posts = Post.objects.filter(site = site)
+    posts = Post.objects.filter(site = site).order_by("-pub_date")
     context = {"posts":posts}
 
     return render (request, "main/dtf.html", context)
@@ -40,14 +34,8 @@ def dtf_(request):
 def igrm_(request):
 
     site = "igromania"
-    igrm.igrm_img()
 
-    #Post.objects.all().delete()
-    #for i in range(0,10):
-        #p = Post(site = site, title = names[i], date = date[i], time = time[i], text = conts[i])
-        #p.save()
-
-    posts = Post.objects.filter(site = site)
+    posts = Post.objects.filter(site = site).order_by("-pub_date")
     context = {"posts":posts}
 
     return render (request, "main/igrm.html", context)
@@ -55,15 +43,15 @@ def igrm_(request):
 def vg_(request):
     
     site = "vgtimes"
-    vg.vg_img()
 
-    #Post.objects.all().delete()
-    #for i in range(0,10):
-        #p = Post(site = site, title = names[i], date = date[i], time = time[i], text = conts[i])
-        #p.save()
-
-    posts = Post.objects.filter(site = site)
+    posts = Post.objects.filter(site = site).order_by("-pub_date")
     context = {"posts":posts}
 
     return render (request, "main/vg.html", context)
+
+def details(request, post_id):
+    
+    post = Post.objects.get(post_id = post_id)
+    context = {'post': post}
+    return render(request, 'main/details.html', context)
 

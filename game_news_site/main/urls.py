@@ -7,4 +7,6 @@ urlpatterns = [
     path('dtf', views.dtf_, name='dtf'),
     path('igrm', views.igrm_, name='igrm'),
     path('vg', views.vg_, name='vg'),
+    path('<int:post_id>', views.details),
+
 ]
