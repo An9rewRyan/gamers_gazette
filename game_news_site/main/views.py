@@ -10,13 +10,14 @@ from .forms import LoginForm,EnterForm, CommentForm
 from django.contrib.auth.models import User
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
+import datetime
 
 def index(request):
 
     #Post.objects.all().delete()
     #dtf.dtf_main()
-    #igrm.igrm_main()
     #vg.vg_main()
+    #igrm.igrm_main()
 
     posts = Post.objects.filter().order_by("-pub_date")
     context = {"posts":posts}
@@ -55,7 +56,7 @@ def details(request, post_id):
     post = Post.objects.get(post_id = post_id)
     likes = Like.objects.filter(post = post).count()
     dislikes = Dislike.objects.filter(post = post).count()
-    comments = Comment.objects.filter(post = post)
+    comments = Comment.objects.filter(post = post, display = True)
     anscomments = CommentChild.objects.filter(post = post)
     context = {'post': post, 'likes':likes, 'dislikes':dislikes, 'comments':comments, 'anscomments':anscomments}
 
@@ -125,10 +126,10 @@ def comment(request, post_id):
 def commenting(request, post_id):
 
     if request.method == "POST":
-
+        now = datetime.datetime.now()
         text = request.POST.get("text")
         post = Post.objects.get(post_id= post_id)
-        comment = Comment(texts = text,post = post, user = request.user)
+        comment = Comment(texts = text,post = post, user = request.user, pub_date = now)
         comment.save()
         link = '//127.0.0.1:8000/main/' + str(post_id)
 
@@ -145,12 +146,83 @@ def anscomment(request, post_id,comment_id):
 def answering(request, post_id,comment_id):
 
     if request.method == "POST":
-
+        
+        now = datetime.datetime.now()
         text = request.POST.get("text")
-        comment = Comment.objects.get(comment_id=comment_id)
         post = Post.objects.get(post_id = post_id)
-        anscomment = CommentChild(texts = text,user = request.user, comment = comment, post = post)
-        anscomment.save()
-        link = '//127.0.0.1:8000/main/' + str(post_id)
+
+        comment1 = Comment(texts = text,post = post, user = request.user, pub_date = now, display = False)
+        comment1.save()
+        comment2 = Comment.objects.get(texts = text,post = post, user = request.user, pub_date = now)
+
+        #comment2 = Comment.objects.get(comment_id=id)
+        #child = CommentChild(texts = text, copy =comment2, user = request.user, prev = comment, comment = comment, post = post)
+        #child.save()
+        link = '//127.0.0.1:8000/main/' + str(post_id)+'/'+str(comment_id)+'/'+str(comment2.comment_id )+'/'
 
         return redirect(link)
+
+@login_required
+def childing(request, post_id,comment_id, parent_id):
+
+    comment = Comment.objects.get(comment_id=comment_id)
+    parent = Comment.objects.get(comment_id = parent_id)
+    text = parent.texts
+    post = Post.objects.get(post_id = post_id)
+    child = CommentChild(texts = text, user = request.user, prev = comment, comment = comment, post = post)
+    child.save()
+
+    link = '//127.0.0.1:8000/main/' + str(post_id)
+
+    return redirect(link)
+
+
+
+@login_required
+def answer_child(request,post_id,comment_id,child_id):
+
+    _CommentForm = CommentForm()
+
+    return render(request, 'main/anschild.html',{'form':_CommentForm})
+
+@login_required
+def answering_child(request, post_id,comment_id, child_id):
+    
+    if request.method == "POST":
+
+        text = request.POST.get("text")
+        now = datetime.datetime.now()
+        child = CommentChild.objects.get(child_id = child_id)
+        post = Post.objects.get(post_id = post_id)
+        copy_comment = Comment(texts = text, user = child.user , post = post, pub_date = now, display = False)
+        copy_comment.save()
+        comment2 = Comment.objects.get(texts = text, post = post, user = child.user, pub_date = now)
+        #anscomment = CommentChild(texts = text, prev = prev, copy = copy_comment, user = request.user, comment = comment, post = post)
+        #anscomment.save()
+        link = '//127.0.0.1:8000/main/' + str(post_id)+'/'+str(comment_id)+'/'+str(child_id)+'/'+str(comment2.comment_id)+'/'+'really_child_answering/'
+
+        return redirect(link)
+
+def really_answering(request, post_id,comment_id, child_id, parent_id):
+
+    #texts = models.TextField()
+    #comment = models.ForeignKey(Comment, related_name='CommentChild',on_delete = models.CASCADE)
+    #copy = models.OneToOneField(Comment,  related_name='ChildCopy',on_delete = models.CASCADE)
+    #prev = models.OneToOneField(Comment,  related_name='ChildPrev',on_delete = models.CASCADE)
+    #user = models.ForeignKey(User, related_name ='comment_childs', on_delete=models.CASCADE)
+    #post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    #child_id = models.IntegerField(primary_key=True)
+
+    parent = Comment.objects.get(comment_id = parent_id)
+    comment = Comment.objects.get(comment_id = comment_id)
+    text = parent.texts
+    post = Post.objects.get(post_id = post_id)
+    child = CommentChild(texts = text, prev = parent, user = request.user, comment = comment, post = post)
+    child.save()
+
+    link = '//127.0.0.1:8000/main/' + str(post_id)
+
+    return redirect(link)
+    
+
+

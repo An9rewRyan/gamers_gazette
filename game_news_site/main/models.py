@@ -31,6 +31,10 @@ class Comment(models.Model):
     post = models.ForeignKey(Post,related_name='comments',on_delete = models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     comment_id = models.IntegerField(primary_key=True)
+    pub_date = models.DateTimeField(auto_now=False)
+    display = models.BooleanField(default=True)
+    
+
     def __str__(self):
         return self.texts
 
@@ -38,7 +42,8 @@ class CommentChild(models.Model):
 
     texts = models.TextField()
     comment = models.ForeignKey(Comment, related_name='CommentChild',on_delete = models.CASCADE)
+    prev = models.ForeignKey(Comment, related_name='ChildPrev',on_delete = models.CASCADE)
     user = models.ForeignKey(User, related_name ='comment_childs', on_delete=models.CASCADE)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
-
+    child_id = models.IntegerField(primary_key=True)
 

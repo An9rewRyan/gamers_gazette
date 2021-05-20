@@ -44,7 +44,8 @@
             <h3><a href = "{{post.post_id}}/{{comment.comment_id}}/answer_comment/">ответить</a></h3> 
             {% for anscomment in anscomments %}
                 {% if anscomment.comment_id == comment.comment_id %}
-                    <p class = "anscomment">комментарий: {{anscomment.texts}} | юзер: {{anscomment.user}} </p>
+                    <p class = "anscomment">комментарий: {{anscomment.prev.user}}, {{anscomment.texts}} | юзер: {{anscomment.user}} </p>
+                    <h3><a href = "{{post.post_id}}/{{comment.comment_id}}/{{anscomment.child_id}}/answer_child/">ответить</a></h3> 
                 {% endif %}
             {% endfor %}
         {% endfor %}
