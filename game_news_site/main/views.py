@@ -5,7 +5,7 @@ import requests
 from dtf import dtf
 from igrm import igrm
 from vg import vg
-from main.models import Post, Like, Dislike, Comment
+from main.models import Post, Like, Dislike, Comment, CommentChild
 from .forms import LoginForm,EnterForm, CommentForm
 from django.contrib.auth.models import User
 from django.shortcuts import redirect
@@ -56,8 +56,9 @@ def details(request, post_id):
     likes = Like.objects.filter(post = post).count()
     dislikes = Dislike.objects.filter(post = post).count()
     comments = Comment.objects.filter(post = post)
-    context = {'post': post, 'likes':likes, 'dislikes':dislikes, 'comments':comments}
-    
+    anscomments = CommentChild.objects.filter(post = post)
+    context = {'post': post, 'likes':likes, 'dislikes':dislikes, 'comments':comments, 'anscomments':anscomments}
+
     return render(request, 'main/details.html', context)
 
 def register_page(request):
@@ -133,4 +134,23 @@ def commenting(request, post_id):
 
         return redirect(link)
 
+@login_required
+def anscomment(request, post_id,comment_id):
 
+    _CommentForm = CommentForm()
+
+    return render(request, 'main/anscomment.html',{'form':_CommentForm})
+
+@login_required
+def answering(request, post_id,comment_id):
+
+    if request.method == "POST":
+
+        text = request.POST.get("text")
+        comment = Comment.objects.get(comment_id=comment_id)
+        post = Post.objects.get(post_id = post_id)
+        anscomment = CommentChild(texts = text,user = request.user, comment = comment, post = post)
+        anscomment.save()
+        link = '//127.0.0.1:8000/main/' + str(post_id)
+
+        return redirect(link)

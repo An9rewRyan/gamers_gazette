@@ -14,4 +14,6 @@ urlpatterns = [
     path('<int:post_id>/dislike/', views.dislike),
     path('<int:post_id>/comment/', views.comment ),
     path('<int:post_id>/comment/commenting/', views.commenting ),
+    path('<int:post_id>/<int:comment_id>/answer_comment/', views.anscomment),
+    path('<int:post_id>/<int:comment_id>/answer_comment/answering/', views.answering),
 ]

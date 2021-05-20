@@ -1,8 +1,10 @@
 body
     {
-        color: black;
+        color: rgb(0, 0, 0);
         font-family: 'Roboto';
         background-color: rgb(187, 181, 181);
+
+
 
     }
 .content
@@ -61,4 +63,13 @@ a
     border-radius: 7px;
     background-color:rgb(233, 230, 213);
     margin-bottom: 28px;
+}
+
+.comment
+{
+    color: rgb(209, 98, 98);
+}
+.anscomment
+{
+    color: rgb(111, 177, 100);
 }

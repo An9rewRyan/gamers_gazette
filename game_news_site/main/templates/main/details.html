@@ -1,5 +1,4 @@
 {% extends "main/base.html" %}
-{% load static %}
 {% block content %}
 
 
@@ -41,10 +40,16 @@
 
         {% for comment in comments %}
         <div class = "comments">
-            <p>комментарий: {{comment.texts}} | юзер: {{comment.user}} </p>
-
-        </div>
+            <p class = "comment">комментарий: {{comment.texts}} | юзер: {{comment.user}} </p>
+            <h3><a href = "{{post.post_id}}/{{comment.comment_id}}/answer_comment/">ответить</a></h3> 
+            {% for anscomment in anscomments %}
+                {% if anscomment.comment_id == comment.comment_id %}
+                    <p class = "anscomment">комментарий: {{anscomment.texts}} | юзер: {{anscomment.user}} </p>
+                {% endif %}
+            {% endfor %}
         {% endfor %}
+        </div>
+
     </div>
 </div>
 
