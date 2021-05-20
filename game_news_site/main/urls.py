@@ -8,5 +8,8 @@ urlpatterns = [
     path('igrm', views.igrm_, name='igrm'),
     path('vg', views.vg_, name='vg'),
     path('<int:post_id>', views.details),
-
+    path('register/', views.register_page),
+    path('registrate/', views.register),
+    path('<int:post_id>/like/', views.like),
+    path('<int:post_id>/dislike/', views.dislike),
 ]

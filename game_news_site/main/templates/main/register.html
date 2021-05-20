@@ -1,0 +1,10 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+
+    <form method = "POST" action = "http://127.0.0.1:8000/main/registrate/">
+        {% csrf_token %}
+        {{login_form}}
+        <input type = "submit" value = "отправить">
+    </form>
+{% endblock %}

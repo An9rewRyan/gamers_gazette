@@ -207,6 +207,6 @@ def vg_main():
         dts.append(str(item)+" "+time[i])
         i = i + 1
     
-    for i in range (0, 10):
+    for i in range (0, 9):
         p = Post(site = site, title = names[i], img = urls[i], pub_date = dts[i], time = time[i], date = date[i], text =  conts[i])
         p.save() 

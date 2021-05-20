@@ -27,6 +27,16 @@
         <br>
         {{post.text}}
         <br>
+        <form method="POST", action = '{{post.post_id}}/like/'>
+            {% csrf_token %}
+            <input type = "submit" value = "like">
+        </form>
+        <form method="POST", action = '{{post.post_id}}/dislike/'>
+            {% csrf_token %}
+            <input type = "submit" value = "dislike">
+        </form>
+        <p>лайки: {{likes}}</p> 
+        <p>дизлайки: {{dislikes}}</p> 
     </div>
 </div>
 

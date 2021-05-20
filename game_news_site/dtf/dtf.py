@@ -73,6 +73,7 @@ def dtf_content():
     remove2 = re.compile(r'\d+\s+комментариев\d+просмотров')
     remove3 = re.compile(r'\d+\s+комментарий\d+просмотров')
     remove4 = re.compile(r'\d+просмотров')
+    remove5 = re.compile(r'\d+\s+комментария')
     for item in link_arr:
 
         url = item
@@ -90,7 +91,8 @@ def dtf_content():
             str1 = remove2.sub('',str1)
             str1 = remove3.sub('',str1)
             str1 = remove4.sub('',str1)
-            #str2 = ' '.join(str1.split())
+            str1 = remove5.sub('',str1)
+                        #str2 = ' '.join(str1.split())
             #arr.append(str2)
 
             arr.append(str1) 
