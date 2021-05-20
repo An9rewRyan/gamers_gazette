@@ -12,4 +12,6 @@ urlpatterns = [
     path('registrate/', views.register),
     path('<int:post_id>/like/', views.like),
     path('<int:post_id>/dislike/', views.dislike),
+    path('<int:post_id>/comment/', views.comment ),
+    path('<int:post_id>/comment/commenting/', views.commenting ),
 ]

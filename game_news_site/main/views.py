@@ -5,10 +5,11 @@ import requests
 from dtf import dtf
 from igrm import igrm
 from vg import vg
-from main.models import Post, Like, Dislike
-from .forms import LoginForm,EnterForm
+from main.models import Post, Like, Dislike, Comment
+from .forms import LoginForm,EnterForm, CommentForm
 from django.contrib.auth.models import User
 from django.shortcuts import redirect
+from django.contrib.auth.decorators import login_required
 
 def index(request):
 
@@ -19,6 +20,7 @@ def index(request):
 
     posts = Post.objects.filter().order_by("-pub_date")
     context = {"posts":posts}
+
     return render (request, "main/index.html", context)
 
 def dtf_(request):
@@ -53,7 +55,9 @@ def details(request, post_id):
     post = Post.objects.get(post_id = post_id)
     likes = Like.objects.filter(post = post).count()
     dislikes = Dislike.objects.filter(post = post).count()
-    context = {'post': post, 'likes':likes, 'dislikes':dislikes}
+    comments = Comment.objects.filter(post = post)
+    context = {'post': post, 'likes':likes, 'dislikes':dislikes, 'comments':comments}
+    
     return render(request, 'main/details.html', context)
 
 def register_page(request):
@@ -70,24 +74,31 @@ def register(request):
         email = request.POST.get("email")
         user = User.objects.create_user(name, email, password)
         context = {'user': user}
+
         return redirect('//127.0.0.1:8000/accounts/login/')
 
+@login_required
 def like(request, post_id):
+
     if request.method == "POST":
         post = Post.objects.get(post_id = post_id)
         likes = Like.objects.filter(user = request.user, post = post_id) 
 
         if likes.exists() :
             link = '//127.0.0.1:8000/main/' + str(post_id)
+
             return redirect(link)
 
         else:
             like = Like(post = post, user = request.user)
             like.save()
             link = '//127.0.0.1:8000/main/' + str(post_id)
+
             return redirect(link)
 
+@login_required
 def dislike(request, post_id):
+
     if request.method == "POST":
         post = Post.objects.get(post_id = post_id)
         dislikes = Dislike.objects.filter(user = request.user, post = post_id) 
@@ -102,6 +113,24 @@ def dislike(request, post_id):
             link = '//127.0.0.1:8000/main/' + str(post_id)
             return redirect(link)
 
+@login_required
+def comment(request, post_id):
 
+    _CommentForm = CommentForm()
+
+    return render(request, 'main/comment.html',{'form':_CommentForm})
+
+@login_required
+def commenting(request, post_id):
+
+    if request.method == "POST":
+
+        text = request.POST.get("text")
+        post = Post.objects.get(post_id= post_id)
+        comment = Comment(texts = text,post = post, user = request.user)
+        comment.save()
+        link = '//127.0.0.1:8000/main/' + str(post_id)
+
+        return redirect(link)
 
 

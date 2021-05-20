@@ -9,3 +9,6 @@ class LoginForm(forms.Form):
 class EnterForm(forms.Form): 
     name = forms.CharField(max_length=100)
     password = forms.IntegerField()
+
+class CommentForm(forms.Form):
+    text = forms.CharField(max_length=400)

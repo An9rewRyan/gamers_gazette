@@ -37,6 +37,14 @@
         </form>
         <p>лайки: {{likes}}</p> 
         <p>дизлайки: {{dislikes}}</p> 
+        <h3><a href = "{{post.post_id}}/comment/">комментировать</a></h3> 
+
+        {% for comment in comments %}
+        <div class = "comments">
+            <p>комментарий: {{comment.texts}} | юзер: {{comment.user}} </p>
+
+        </div>
+        {% endfor %}
     </div>
 </div>
 

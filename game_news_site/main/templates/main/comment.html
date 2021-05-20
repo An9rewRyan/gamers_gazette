@@ -1,0 +1,12 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+    <form method="POST", action = 'commenting/'>
+        {% csrf_token %}
+        <h3>Текст комментария</h3>
+        <p>{{form.text}}</p>
+        <input type = "submit" value = "отправить">
+    </form>
+
+
+{% endblock %}
