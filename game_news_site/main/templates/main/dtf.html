@@ -21,6 +21,13 @@
         <br>
         <div class = "img_container">
         <a href = "http://127.0.0.1:8000/main/{{post.post_id}}"><img class = "index_image" src ="{{ MEDIA_URL }}{{post.img.url}}"></a>
+        <p>просмотры: {{post.views}}</p>
+
+        <p>лайки: {{post.likes}}</p>
+
+        <p>дизлайки: {{post.dislikes}}</p>
+
+        <p>комментарии: {{post.comments}}</p>
         </div>
     </div>
     {% endfor%}

@@ -4,7 +4,7 @@
 
 <div class = "details_content">
     <div class = "menu">
-        <a href = "main/">Главная</a>
+        <a href = "http://127.0.0.1:8000/main/">Главная</a>
         <a href = "http://127.0.0.1:8000/main/dtf">DTF  </a>
         <a href = "http://127.0.0.1:8000/main/vg">VGTimes  </a>
         <a href = "http://127.0.0.1:8000/main/igrm">Igromania  </a>
@@ -34,6 +34,7 @@
             {% csrf_token %}
             <input type = "submit" value = "dislike">
         </form>
+        <p>просмотры: {{views}}</p>
         <p>лайки: {{likes}}</p> 
         <p>дизлайки: {{dislikes}}</p> 
         <h3><a href = "{{post.post_id}}/comment/">комментировать</a></h3> 

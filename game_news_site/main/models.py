@@ -14,6 +14,9 @@ class Post(models.Model):
     img = models.ImageField(upload_to='images/', blank=True)
     post_id = models.IntegerField(primary_key=True)
     likes = models.IntegerField(default=0)
+    dislikes = models.IntegerField(default=0)
+    views = models.IntegerField(default=0)
+    comments = models.IntegerField( default=0)
 
 class Like(models.Model):
 
@@ -28,7 +31,7 @@ class Dislike(models.Model):
 class Comment(models.Model):
 
     texts = models.TextField()
-    post = models.ForeignKey(Post,related_name='comments',on_delete = models.CASCADE)
+    post = models.ForeignKey(Post,related_name='commentaris',on_delete = models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     comment_id = models.IntegerField(primary_key=True)
     pub_date = models.DateTimeField(auto_now=False)
@@ -46,4 +49,9 @@ class CommentChild(models.Model):
     user = models.ForeignKey(User, related_name ='comment_childs', on_delete=models.CASCADE)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     child_id = models.IntegerField(primary_key=True)
+
+class View(models.Model):
+
+    user = models.ForeignKey(User, related_name='view', on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
 
