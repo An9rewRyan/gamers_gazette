@@ -9,6 +9,10 @@
         <a href = "http://127.0.0.1:8000/main/vg">VG Times</a>
         <a href = "http://127.0.0.1:8000/main/igrm">Igromania</a>
     </div>
+    <div class = "sub_menu">
+        <a href = "http://127.0.0.1:8000/main/fresh">свежие</a>
+        <a href = "http://127.0.0.1:8000/main/popular">популярные</a>
+    </div>
     <br>
     {% for post in posts %}
     <div class = "post">
@@ -23,7 +27,15 @@
         <br>
         <div class = "img_container">
         <a href = "http://127.0.0.1:8000/main/{{post.post_id}}"><img class = "index_image" src ="{{ MEDIA_URL }}{{post.img.url}}"></a>
-
+        </div>
+        <form method="POST", action = '{{post.post_id}}/like/'>
+            {% csrf_token %}
+            <input type = "submit" value = "like">
+        </form>
+        <form method="POST", action = '{{post.post_id}}/dislike/'>
+            {% csrf_token %}
+            <input type = "submit" value = "dislike">
+        </form>
                 <p>просмотры: {{post.views}}</p>
 
                 <p>лайки: {{post.likes}}</p>
@@ -32,7 +44,7 @@
 
                 <p>комментарии: {{post.comments}}</p>
 
-        </div>
+
         <br>
     </div>
     {% endfor%}

@@ -16,14 +16,24 @@ def index(request):
 
     #Post.objects.all().delete()
     #dtf.dtf_main()
-    #vg.vg_main()
     #igrm.igrm_main()
+    #vg.vg_main()
     likes = Like.objects.filter()
     dislikes = Dislike.objects.filter()
     views = View.objects.filter()
     posts = Post.objects.filter().order_by("-pub_date")
     context = {"posts":posts,'likes':likes, 'dislikes':dislikes, 'views':views}
 
+    return render (request, "main/index.html", context)
+
+def fresh(request):
+    posts = Post.objects.filter().order_by("-pub_date")
+    context = {"posts":posts}
+    return render (request, "main/index.html", context)
+
+def popular(request):
+    posts = Post.objects.filter().order_by("-likes")
+    context = {"posts":posts}
     return render (request, "main/index.html", context)
 
 def dtf_(request):

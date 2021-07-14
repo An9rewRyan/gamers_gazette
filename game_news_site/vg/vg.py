@@ -36,7 +36,7 @@ def vg_links():
 
     for item in out:
         str1 = str(item)
-        str1 = str1[39:]
+        str1 = str1[60:]
         str1 = str1.split(sep, 1)[0]
         link_arr.append(str1)
 

@@ -20,7 +20,7 @@ def vg_names():
     del name_arr[10:]
 
     return(name_arr)
-
+print(vg_names)
 def vg_links():
     link_arr = []
     url = 'https://vgtimes.ru/tags/%D0%98%D0%B3%D1%80%D0%BE%D0%B2%D1%8B%D0%B5+%D0%BD%D0%BE%D0%B2%D0%BE%D1%81%D1%82%D0%B8/'
